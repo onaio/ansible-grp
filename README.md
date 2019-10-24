@@ -1,6 +1,6 @@
 # ansible-grp
 
-Install and configure Kaznet web app.
+Install and configure grp frontend and backend.
 
 ## How it works
 
