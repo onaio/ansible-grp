@@ -1,0 +1,15 @@
+---
+- name: Copy static files
+  include_tasks: static.yml
+  tags:
+    - install
+    - django
+    - staticfiles
+
+- name: Load initial users data
+  django_manage:
+    command: "loaddata {{ item }}"
+    app_path: "{{ grp_django_checkout_path }}"
+    virtualenv: "{{ grp_django_venv_path }}"
+  with_items: "{{ grp_initial_data_files }}"
+  when: "{{ grp_load_initial_data }}"

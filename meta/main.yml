@@ -1,0 +1,161 @@
+---
+galaxy_info:
+  author: Ona Engineering
+  company: Ona Systems Inc
+  description: Install and configure grp web app.
+  license: Apache 2
+  min_ansible_version: 2.6
+  platforms:
+    - name: Ubuntu
+      versions:
+        - xenial
+
+dependencies:
+  - role: ANXS.postgresql
+    become: true
+    become_user: "root"
+    vars:
+      postgresql_version: 10
+      postgresql_encoding: "UTF-8"
+      postgresql_locale: "en_US.UTF-8"
+      postgresql_ctype: "en_US.UTF-8"
+      postgresql_admin_user: "postgres"
+      postgresql_default_auth_method: "peer"
+      postgresql_service_enabled: true
+      postgresql_cluster_name: "main"
+      postgresql_cluster_reset: false
+      postgresql_databases:
+        - name: "{{ grp_django_system_user }}"
+          owner: "{{ grp_django_system_user }}"
+      postgresql_users:
+        - name: "{{ grp_postgres_user }}"
+          pass: "{{ grp_postgres_password }}"
+          encrypted: yes
+      postgresql_ext_postgis_deps:
+        - libgeos-c1v5
+        - "postgresql-{{postgresql_version}}-postgis-{{postgresql_ext_postgis_version}}"
+        - "postgresql-{{postgresql_version}}-postgis-scripts"
+      postgresql_ext_install_postgis: yes
+      postgresql_ext_postgis_version: "2.4"
+      postgresql_database_extensions:
+        - db: "{{ grp_django_system_user }}"
+          extensions:
+            - postgis
+      postgresql_user_privileges:
+        - name: "{{ grp_django_system_user }}"
+          db: "{{ grp_django_system_user }}"
+          priv: "ALL"
+          role_attr_flags: "CREATEDB"
+    tags:
+      - 'postgresql'
+    when:
+      - grp_deploy_postgres == true
+
+  - name: "Setup redis"
+    role: DavidWittman.redis
+    become: true
+    become_user: "root"
+    vars:
+      redis_bind: "{{ grp_redis_bind }}"
+      redis_port: "{{ grp_redis_port }}"
+      redis_password: "{{ grp_redis_password }}"
+      redis_version: "{{ grp_redis_version }}"
+      redis_install_dir: "{{ grp_redis_install_dir }}"
+      redis_dir: "{{ grp_redis_dir }}"
+      redis_download_url: "{{ grp_redis_download_url }}"
+      redis_verify_checksum: "{{ grp_redis_verify_checksum }}"
+      redis_tarball: "{{ grp_redis_tarball }}"
+      redis_make_32bit: "{{ grp_redis_make_32bit }}"
+      redis_user: "{{ grp_redis_user }}"
+      redis_group: "{{ grp_redis_group }}"
+      redis_nofile_limit: "{{ grp_redis_nofile_limit }}"
+      redis_as_service: "{{ grp_redis_as_service }}"
+      redis_local_facts: "{{ grp_redis_local_facts }}"
+      redis_service_name: "{{ grp_redis_service_name }}"
+      redis_min_slaves_to_write: "{{ grp_redis_min_slaves_to_write }}"
+      redis_min_slaves_max_lag: "{{ grp_redis_min_slaves_max_lag }}"
+      redis_tcp_backlog: "{{ grp_redis_tcp_backlog }}"
+      redis_tcp_keepalive: "{{ grp_redis_tcp_keepalive }}"
+      redis_maxclients: "{{ grp_redis_maxclients }}"
+      redis_timeout: "{{ grp_redis_timeout }}"
+      redis_socket_path: "{{ grp_redis_socket_path }}"
+      redis_socket_perm: "{{ grp_redis_socket_perm }}"
+    tags:
+      - redis
+
+  - name: "Setup react"
+    role: react
+    become: true
+    become_user: "root"
+    vars:
+      react_system_user: "{{ grp_react_system_user }}"
+      react_system_group: "{{ grp_react_system_group }}"
+      react_system_user_home: "{{ grp_react_system_user_home }}"
+      react_system_wide_dependencies: "{{ grp_react_system_wide_dependencies }}"
+      react_codebase_path: "{{ grp_react_codebase_path }}"
+      react_versioned_path: "{{ grp_react_versioned_path }}"
+      react_node_version: "{{ grp_react_node_version }}"
+      react_git_url: "{{ grp_react_git_url }}"
+      react_git_version: "{{ grp_react_git_version }}"
+      react_git_key: "{{ grp_react_git_key }}"
+      react_git_key_ssh_file: "{{ grp_react_git_key_ssh_file }}"
+      react_git_key_filename: "{{ grp_react_git_key_filename }}"
+      react_remove_git_key: "{{ grp_react_remove_git_key }}"
+      react_app_settings: "{{ grp_react_app_settings }}"
+    tags:
+      - react
+      - staticfiles
+
+  - name: "Setup django"
+    role: django
+    become: true
+    become_user: "root"
+    vars:
+      django_system_user: "{{ grp_django_system_user }}"
+      django_system_group: "{{ grp_django_system_group }}"
+      system_user_home: "{{ grp_django_system_user_home }}"
+      django_git_url: "{{ grp_django_git_url }}"
+      django_git_version: "{{ grp_django_git_version }}"
+      django_git_key: "{{ grp_django_git_key }}"
+      django_git_key_ssh_file: "{{ grp_django_git_key_ssh_file }}"
+      django_git_key_filename: "{{ grp_django_git_key_filename }}"
+      django_remove_git_key: true
+      django_recreate_virtual_env: "{{ grp_django_recreate_virtual_env }}"
+      django_codebase_path: "{{ grp_django_codebase_path }}"
+      django_versioned_path: "{{ grp_django_versioned_path }}"
+      django_checkout_path: "{{ grp_django_checkout_path }}"
+      django_venv_path: "{{ grp_django_venv_path }}"
+      django_celery_app: "{{ grp_django_celery_app }}"
+      django_celeryd_nodes: "{{ grp_django_celeryd_nodes }}"
+      django_celeryd_opts: "{{ grp_django_celeryd_opts }}"
+      django_python_source_version: "{{ grp_django_python_source_version }}"
+      django_python_version: "{{ grp_django_python_version }}"
+      django_enable_celery: "{{ grp_django_enable_celery }}"
+      django_local_settings_path: "{{ grp_django_local_settings_path }}"
+      django_settings_module: "{{ grp_django_app_settings_module }}"
+      django_wsgi_module: "{{ grp_django_wsgi_module }}"
+      django_init_commands: "{{ grp_django_init_commands }}"
+      django_pip_packages: "{{ grp_django_pip_packages }}"
+      django_settings: "{{ grp_django_app_settings }}"
+      django_use_regular_old_pip: true
+      django_use_pipenv: false
+      django_system_wide_dependencies: "{{ grp_django_system_wide_dependencies }}"
+      django_manage_services: true
+      django_service_name: "{{ grp_django_service_name }}"
+      django_service_type: "{{ grp_django_service_type }}"
+      django_service_restart: "{{ grp_django_service_restart }}"
+      django_service_group: "{{ grp_django_service_group }}"
+      django_service_unit_after: "{{ grp_django_service_unit_after }}"
+      django_service_install_wantedby: "{{ grp_django_service_install_wantedby }}"
+      django_pid_socks_dir: "{{ grp_django_pid_socks_dir }}"
+      django_wsgi_socket: "{{ grp_django_wsgi_socket }}"
+      django_static_path: "{{ grp_django_static_path }}"
+      django_media_path: "{{ grp_django_media_path }}"
+      django_proxy_read_timeout: "{{ grp_django_proxy_read_timeout }}"
+      django_top_python_statements: "{{ grp_django_top_python_statements  }}"
+      django_bottom_python_statements: "{{ grp_django_bottom_python_statements  }}"
+      django_pip_paths: "{{ grp_requirements_paths }}"
+      django_settings_template_path: "{{ grp_django_settings_template_path }}"
+      django_copy_key_from_file: true
+    tags:
+      - django

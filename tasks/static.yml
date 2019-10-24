@@ -1,0 +1,263 @@
+---
+# This task copies the react static files into Django static file directories
+
+- name: "Find first react css files"
+  find:
+    paths: "{{ grp_react_codebase_path }}/build/static/css"
+    patterns: "4.*.chunk.css"
+  register: first_react_css_files
+
+- name: "Copy first react css file"
+  become: True
+  become_user: "{{ grp_django_system_user }}"
+  copy:
+    src: "{{ first_react_css_files.files[0].path }}"
+    dest: "{{ grp_django_codebase_path }}/api/static/react/css/main.css"
+    owner: "{{ grp_django_system_user }}"
+    group: "{{ grp_django_system_group }}"
+    remote_src: yes
+
+- name: "Find second react css files"
+  find:
+    paths: "{{ grp_react_codebase_path }}/build/static/css"
+    patterns: "main.*.chunk.css"
+  register: react_css_files
+
+- name: "Copy second react css file"
+  become: True
+  become_user: "{{ grp_django_system_user }}"
+  copy:
+    src: "{{ react_css_files.files[0].path }}"
+    dest: "{{ grp_django_codebase_path }}/api/static/react/css/main1.css"
+    owner: "{{ grp_django_system_user }}"
+    group: "{{ grp_django_system_group }}"
+    remote_src: yes
+
+- name: "Find first react css map files"
+  find:
+    paths: "{{ grp_react_codebase_path }}/build/static/css"
+    patterns: "4.*.chunk.css.map"
+  register: first_react_css_map_files
+
+- name: "Copy first react css map file"
+  become: True
+  become_user: "{{ grp_django_system_user }}"
+  copy:
+    src: "{{ first_react_css_map_files.files[0].path }}"
+    dest: "{{ grp_django_codebase_path }}/api/static/react/css/main.css.map"
+    owner: "{{ grp_django_system_user }}"
+    group: "{{ grp_django_system_group }}"
+    remote_src: yes
+  when: first_react_css_map_files.files | length > 0
+
+- name: "Find second react css map files"
+  find:
+    paths: "{{ grp_react_codebase_path }}/build/static/css"
+    patterns: "main.*.chunk.css.map"
+  register: react_css_map_files
+
+- name: "Copy second react css map file"
+  become: True
+  become_user: "{{ grp_django_system_user }}"
+  copy:
+    src: "{{ react_css_map_files.files[0].path }}"
+    dest: "{{ grp_django_codebase_path }}/api/static/react/css/main1.css.map"
+    owner: "{{ grp_django_system_user }}"
+    group: "{{ grp_django_system_group }}"
+    remote_src: yes
+  when: react_css_map_files.files | length > 0
+
+- name: "Find first react js files"
+  find:
+    paths: "{{ grp_react_codebase_path }}/build/static/js"
+    patterns: "4.*.chunk.js"
+  register: first_react_js_files
+
+- name: "Copy first react js file"
+  become: True
+  become_user: "{{ grp_django_system_user }}"
+  copy:
+    src: "{{ first_react_js_files.files[0].path }}"
+    dest: "{{ grp_django_codebase_path }}/api/static/react/js/main.js"
+    owner: "{{ grp_django_system_user }}"
+    group: "{{ grp_django_system_group }}"
+    remote_src: yes
+
+- name: "Find first react js map files"
+  find:
+    paths: "{{ grp_react_codebase_path }}/build/static/js"
+    patterns: "4.*.chunk.js.map"
+  register: first_react_js_map_files
+
+- name: "Copy first react js map file"
+  become: True
+  become_user: "{{ grp_django_system_user }}"
+  copy:
+    src: "{{ first_react_js_map_files.files[0].path }}"
+    dest: "{{ grp_django_codebase_path }}/api/static/react/js/main.js.map"
+    owner: "{{ grp_django_system_user }}"
+    group: "{{ grp_django_system_group }}"
+    remote_src: yes
+  when: first_react_js_map_files.files | length > 0
+
+- name: "Find second react js files"
+  find:
+    paths: "{{ grp_react_codebase_path }}/build/static/js"
+    patterns: "main.*.chunk.js"
+  register: main_react_js_files
+
+- name: "Copy second react js file"
+  become: True
+  become_user: "{{ grp_django_system_user }}"
+  copy:
+    src: "{{ main_react_js_files.files[0].path }}"
+    dest: "{{ grp_django_codebase_path }}/api/static/react/js/main1.js"
+    owner: "{{ grp_django_system_user }}"
+    group: "{{ grp_django_system_group }}"
+    remote_src: yes
+
+- name: "Find second react js map files"
+  find:
+    paths: "{{ grp_react_codebase_path }}/build/static/js"
+    patterns: "main.*.chunk.js.map"
+  register: main_react_js_map_files
+
+- name: "Copy second react js map file"
+  become: True
+  become_user: "{{ grp_django_system_user }}"
+  copy:
+    src: "{{ main_react_js_map_files.files[0].path }}"
+    dest: "{{ grp_django_codebase_path }}/api/static/react/js/main1.js.map"
+    owner: "{{ grp_django_system_user }}"
+    group: "{{ grp_django_system_group }}"
+    remote_src: yes
+  when: main_react_js_map_files.files | length > 0
+
+- name: "Find third react js files"
+  find:
+    paths: "{{ grp_react_codebase_path }}/build/static/js"
+    patterns: "runtime~main.*.js"
+  register: runtime_react_js_files
+
+- name: "Copy third react js file"
+  become: True
+  become_user: "{{ grp_django_system_user }}"
+  copy:
+    src: "{{ runtime_react_js_files.files[0].path }}"
+    dest: "{{ grp_django_codebase_path }}/api/static/react/js/main2.js"
+    owner: "{{ grp_django_system_user }}"
+    group: "{{ grp_django_system_group }}"
+    remote_src: yes
+
+- name: "Find third react js map files"
+  find:
+    paths: "{{ grp_react_codebase_path }}/build/static/js"
+    patterns: "runtime~main.*.js.map"
+  register: runtime_react_js_map_files
+
+- name: "Copy third react js map file"
+  become: True
+  become_user: "{{ grp_django_system_user }}"
+  copy:
+    src: "{{ runtime_react_js_map_files.files[0].path }}"
+    dest: "{{ grp_django_codebase_path }}/api/static/react/js/main2.js.map"
+    owner: "{{ grp_django_system_user }}"
+    group: "{{ grp_django_system_group }}"
+    remote_src: yes
+  when: runtime_react_js_map_files.files | length > 0
+
+
+- name: "Find service-worker.js file"
+  find:
+    paths: "{{ grp_react_codebase_path }}/build"
+    patterns: "service-worker.js"
+  register: react_service_worker_files
+
+- name: "Copy service-worker.js file"
+  become: True
+  become_user: "{{ grp_django_system_user }}"
+  copy:
+    src: "{{ react_service_worker_files.files[0].path }}"
+    dest: "{{ grp_django_codebase_path }}/api/static/react/service-worker.js"
+    owner: "{{ grp_django_system_user }}"
+    group: "{{ grp_django_system_group }}"
+    remote_src: yes
+
+- name: "Find manifest.json file"
+  find:
+    paths: "{{ grp_react_codebase_path }}/build"
+    patterns: "manifest.json"
+  register: react_manifest_files
+
+- name: "Copy manifest.json file"
+  become: True
+  become_user: "{{ grp_django_system_user }}"
+  copy:
+    src: "{{ react_manifest_files.files[0].path }}"
+    dest: "{{ grp_django_codebase_path }}/api/static/react/manifest.json"
+    owner: "{{ grp_django_system_user }}"
+    group: "{{ grp_django_system_group }}"
+    remote_src: yes
+
+- name: "Find asset-manifest.json file"
+  find:
+    paths: "{{ grp_react_codebase_path }}/build"
+    patterns: "asset-manifest.json"
+  register: react_asset_manifest_files
+
+- name: "Copy manifest.json file"
+  become: True
+  become_user: "{{ grp_django_system_user }}"
+  copy:
+    src: "{{ react_asset_manifest_files.files[0].path }}"
+    dest: "{{ grp_django_codebase_path }}/api/static/react/asset-manifest.json"
+    owner: "{{ grp_django_system_user }}"
+    group: "{{ grp_django_system_group }}"
+    remote_src: yes
+
+- name: "Find favicon.ico file"
+  find:
+    paths: "{{ grp_react_codebase_path }}/build"
+    patterns: "favicon.ico"
+  register: react_favicon_files
+
+- name: "Copy favicon.ico file"
+  become: True
+  become_user: "{{ grp_django_system_user }}"
+  copy:
+    src: "{{ react_favicon_files.files[0].path }}"
+    dest: "{{ grp_django_codebase_path }}/api/static/react/favicon.ico"
+    owner: "{{ grp_django_system_user }}"
+    group: "{{ grp_django_system_group }}"
+    remote_src: yes
+
+- name: "Recursively copy react static folder content to django static folder"
+  become: True
+  become_user: "{{ grp_django_system_user }}"
+  command: "cp -r {{ grp_react_codebase_path }}/build/static/. {{ grp_django_static_path }}"
+
+- name: "Delete old react static files"
+  become: True
+  become_user: "{{ grp_django_system_user }}"
+  file:
+    state: absent
+    path: "{{ grp_django_static_path }}react/"
+
+- name: Run Django collectstatic command
+  django_manage:
+    command: "collectstatic --no-input"
+    app_path: "{{ grp_django_codebase_path }}"
+    virtualenv: "{{ grp_django_venv_path }}"
+  become: True
+  become_user: "{{ grp_django_system_user }}"
+  notify:
+    - restart_service
+
+- name: "Copy JWT config file"
+  template:
+    src: "templates/opt/grp/{{ item }}"
+    dest: "{{ grp_django_codebase_path }}/api/config/{{ item }}"
+    owner: "{{ grp_django_system_user }}"
+    group: "{{ grp_django_system_group }}"
+  with_items:
+    - "jwt_config.json"
