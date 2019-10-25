@@ -1,4 +1,15 @@
 ---
+- name: Build the docs
+  shell: ". {{ grp_django_venv_path }}/bin/activate && sphinx-build {{ grp_django_checkout_path }}/docs/ {{ grp_docs_path }}"
+  become: true
+
+- name: Changing docs folder permissions
+  file:
+    path: "{{ grp_docs_path }}"
+    owner: "{{ grp_django_system_user }}"
+    group: "{{ grp_django_system_group }}"
+    mode: 0755
+
 - name: Copy static files
   include_tasks: static.yml
   tags:
