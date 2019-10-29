@@ -556,3 +556,5 @@ grp_redis_maxclients: "10000"
 grp_redis_timeout: "0"
 grp_redis_socket_path: "False"
 grp_redis_socket_perm: "755"
+# sentry
+sentry_dsn: "{{ vault_grp_sentry_dsn }}"
