@@ -204,7 +204,7 @@
           PASSWORD_RESET_TIMEOUT_DAYS: "1"
           RAVEN_CONFIG: |
             {
-              'dsn': '',
+              'dsn': '{{ vault_grp_sentry_dsn }}',
               'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
             }
           MAP_USER_TO_ONA: True
