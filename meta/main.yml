@@ -107,7 +107,7 @@ dependencies:
       - staticfiles
 
   - name: "Setup django"
-    role: django
+    role: onaio.django
     become: true
     become_user: "root"
     vars:
