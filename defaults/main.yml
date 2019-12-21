@@ -508,6 +508,7 @@ grp_react_git_key: "{{ grp_django_git_key }}"
 grp_react_git_key_ssh_file: "{{ grp_django_git_key_ssh_file }}"
 grp_react_git_key_filename: "{{ grp_django_git_key_filename }}"
 grp_react_remove_git_key: True
+grp_react_remote_js_build: yes
 grp_react_app_settings:
   REACT_APP_WEBSITE_NAME: "{{ grp_django_system_user }}"
   REACT_APP_ENDPOINT: "https://grp.stage.ona.io/api/v1"

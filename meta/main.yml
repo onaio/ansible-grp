@@ -102,6 +102,7 @@ dependencies:
       react_git_key_filename: "{{ grp_react_git_key_filename }}"
       react_remove_git_key: "{{ grp_react_remove_git_key }}"
       react_app_settings: "{{ grp_react_app_settings }}"
+      react_remote_js_build: "{{ grp_react_remote_js_build }}"
     tags:
       - react
       - staticfiles
