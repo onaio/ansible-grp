@@ -62,7 +62,6 @@ dependencies:
       redis_version: "{{ grp_redis_version }}"
       redis_install_dir: "{{ grp_redis_install_dir }}"
       redis_dir: "{{ grp_redis_dir }}"
-      redis_download_url: "{{ grp_redis_download_url }}"
       redis_verify_checksum: "{{ grp_redis_verify_checksum }}"
       redis_tarball: "{{ grp_redis_tarball }}"
       redis_make_32bit: "{{ grp_redis_make_32bit }}"

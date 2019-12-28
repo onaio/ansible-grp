@@ -539,7 +539,6 @@ grp_redis_password: False
 grp_redis_version: "5.0.3"
 grp_redis_install_dir: "/opt/redis"
 grp_redis_dir: "/var/lib/grp_redis/{{ grp_redis_port }}"
-grp_redis_download_url: "http://download.grp_redis.io/releases/redis-{{ grp_redis_version }}.tar.gz"
 grp_redis_verify_checksum: False
 grp_redis_tarball: False
 grp_redis_make_32bit: False
