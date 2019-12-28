@@ -471,16 +471,17 @@ grp_django_git_version: "'{{ vault_grp_django_git_version }}'"
 grp_django_grp_use_regular_old_pip: false
 grp_django_grp_use_pipenv: true
 grp_django_system_wide_dependencies:
-  - build-essential
-  - git
-  - python3.6-dev
   - binutils
-  - libproj-dev
+  - build-essential
   - gdal-bin
-  - python-gdal
+  - git
   - libgeoip1
-  - python3-distutils
+  - libproj-dev
   - libpq-dev
+  - python3-distutils
+  - python3-gdal
+  - python3-pip
+  - python3.6-dev
 
 grp_django_top_python_statements:
   - import os
