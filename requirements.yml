@@ -7,7 +7,7 @@
   version: master
 - src: git+https://github.com/onaio/ansible-react
   name: react
-  version: v0.0.1
+  version: 950c5e67e77775795cffc7573c37fa2bfad00a1e
 - src: https://github.com/ANXS/postgresql
   name: ANXS.postgresql
   version: f326a92b02e63224a65076565cc9873768faee25
