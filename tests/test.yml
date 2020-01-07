@@ -52,7 +52,7 @@
     grp_django_pid_socks_dir: "/var/run/{{ grp_django_service_name }}"
     grp_django_wsgi_socket: "{{ grp_django_pid_socks_dir }}/{{ grp_django_system_user }}.sock"
     grp_django_proxy_read_timeout: "300s"
-    grp_django_settings_template_path: "templates/grp/local_settings.py.j2"
+    grp_django_settings_template_path: "{{ grp_django_settings_template }}"
     grp_docs_path: "{{ grp_django_checkout_path }}/api/static/docs"
     grp_django_static_path: "/home/{{ grp_django_system_user }}/static"
     grp_django_media_path: "/home/{{ grp_django_system_user }}/media"
