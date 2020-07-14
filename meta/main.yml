@@ -47,7 +47,7 @@ dependencies:
           priv: "ALL"
           role_attr_flags: "CREATEDB"
     tags:
-      - 'postgresql'
+      - "postgresql"
     when:
       - grp_deploy_postgres == true
 
@@ -116,7 +116,7 @@ dependencies:
       system_user_home: "{{ grp_django_system_user_home }}"
       django_git_url: "{{ grp_django_git_url }}"
       django_git_version: "{{ grp_django_git_version }}"
-      django_git_key: "{{ grp_django_git_key }}"
+      django_git_key_content: "{{ grp_django_git_key }}"
       django_git_key_ssh_file: "{{ grp_django_git_key_ssh_file }}"
       django_git_key_filename: "{{ grp_django_git_key_filename }}"
       django_remove_git_key: true
