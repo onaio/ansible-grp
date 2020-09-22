@@ -48,7 +48,7 @@
           - celery
           - uwsgi
           - redis>3
-          - django-debug-toolbar
+          - django-debug-toolbar==2.2
         grp_django_celeryd_nodes: "default-node"
         grp_django_celeryd_opts: "--time-limit=300 --concurrency=8"
         grp_django_app_settings:
