@@ -48,12 +48,16 @@ grp_nginx_site_name: "{{ grp_nginx_site_names[0] }}"
 grp_nginx_api_site_name: "{{ grp_nginx_api_site_names[0] }}"
 grp_nginx_http_site_name: "{{ deployed_site_name }}-http"
 grp_nginx_https_site_name: "{{ deployed_site_name }}-https"
+grp_nginx_http_www_site_name: "{{ grp_nginx_site_name }}-http-www"
+grp_nginx_https_www_site_name: "{{ grp_nginx_site_name }}-https-www"
 grp_nginx_http_api_site_name: "{{ deployed_site_name }}-http-api"
 grp_nginx_https_api_site_name: "{{ deployed_site_name }}-https-api"
 
 grp_nginx_enabled_sites:
  - "{{ grp_nginx_http_site_name }}"
  - "{{ grp_nginx_https_site_name }}"
+ - "{{ grp_nginx_http_www_site_name }}"
+ - "{{ grp_nginx_https_www_site_name }}"
  - "{{ grp_nginx_http_api_site_name }}"
  - "{{ grp_nginx_https_api_site_name }}"
 grp_nginx_client_max_body_size: "100M"
@@ -69,6 +73,15 @@ nginx_basic_auth_files:
         state: "present"
 
 grp_nginx_sites:
+  - server:
+        name: "{{ grp_nginx_http_www_site_name }}"
+        listen:
+          - "80"
+          - "[::]:80"
+        server_name: "{{ grp_nginx_www_site_names|join(' ') }}"
+        rewrite: "^(.*) http://{{ grp_nginx_site_name }}$1 permanent"
+        ssl:
+          enabled: False
   - server:
       name: "{{ grp_nginx_http_site_name }}"
       listen:
