@@ -251,7 +251,7 @@
   become: True
   become_user: "{{ grp_django_system_user }}"
   notify:
-    - restart_service
+    - Restart Django Service
 
 - name: "Copy JWT config file"
   template:
